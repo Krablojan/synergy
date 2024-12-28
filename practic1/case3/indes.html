@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <img src="https://via.placeholder.com/800x400?text=Image+1" alt="Image 1" class="slide">
+            <img src="https://via.placeholder.com/800x400?text=Image+2" alt="Image 2" class="slide">
+            <img src="https://via.placeholder.com/800x400?text=Image+3" alt="Image 3" class="slide">
+            <img src="https://via.placeholder.com/800x400?text=Image+4" alt="Image 4" class="slide">
+            <img src="https://via.placeholder.com/800x400?text=Image+5" alt="Image 5" class="slide">
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+        <div class="counter">Изображение <span id="current">1</span> из <span id="total">5</span></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
