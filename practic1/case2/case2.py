@@ -1,58 +1,69 @@
+def get_user_birthday():
+    date_str = input("Введите дату вашего рождения (в формате ДД.ММ.ГГГГ): ")
+    day, month, year = map(int, date_str.split('.'))
+    return day, month, year
+
 def is_leap_year(year):
-  """Проверяет, является ли год високосным."""
-  if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
-      return True
-  return False
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
-def get_day_of_week(day, month, year):
-  """Определяет день недели для заданной даты (алгоритм Зеллера)."""
-  if month < 3:
-      month += 12
-      year -= 1
-  K = year % 100
-  J = year // 100
-  f = day + ((13 * (month + 1)) // 5) + K + (K // 4) + (J // 4) - (2 * J)
-  day_of_week = f % 7
-  # Преобразуем день недели в нужный формат (0 - суббота, 1 - воскресенье, ..., 6 - пятница)
-  day_of_week = (day_of_week + 6) % 7
-  return day_of_week
+def day_of_week(day, month, year):
+    days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+    t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
+    if month < 3:
+        year -= 1
+    return days[(year + year // 4 - year // 100 + year // 400 + t[month - 1] + day) % 7]
 
-def get_age(day, month, year):
-  """Вычисляет текущий возраст пользователя."""
-  current_day = 28
-  current_month = 12
-  current_year = 2024
+def calculate_age(day, month, year):
+    # Вместо использования datetime, просто сравниваем с текущей датой
+    current_year = 2025
+    current_month = 1
+    current_day = 7
+    age = current_year - year - ((current_month, current_day) < (month, day))
+    return age
 
-  if (current_month < month) or (current_month == month and current_day < day):
-      return current_year - year - 1
-  return current_year - year
+def print_digital_date(day, month, year):
+    digits = {
+        '0': [" *** ", "*   *", "*   *", "*   *", " *** "],
+        '1': ["  *  ", " **  ", "  *  ", "  *  ", " *** "],
+        '2': [" *** ", "    *", " *** ", "*    ", "*****"],
+        '3': [" *** ", "    *", " *** ", "    *", " *** "],
+        '4': ["*   *", "*   *", "*****", "    *", "    *"],
+        '5': ["*****", "*    ", " *** ", "    *", " *** "],
+        '6': [" *** ", "*    ", "**** ", "*   *", " *** "],
+        '7': ["*****", "    *", "   * ", "  *  ", " *   "],
+        '8': [" *** ", "*   *", " *** ", "*   *", " *** "],
+        '9': [" *** ", "*   *", " ****", "    *", " *** "],
+    }
 
-def print_styled_date(day, month, year):
-  """Выводит дату в стилизованном формате."""
-  styled_day = ''.join(['*****' if char.isdigit() else char for char in f'{day:02}'])
-  styled_month = ''.join(['*****' if char.isdigit() else char for char in f'{month:02}'])
-  styled_year = ''.join(['*****' if char.isdigit() else char for char in f'{year}'])
-  print(f'{styled_day} {styled_month} {styled_year}')
+    def render_number(number):
+        return [digits[d] for d in str(number)]
 
-def main():
-  day = int(input("Введите день рождения (число): "))
-  month = int(input("Введите месяц рождения (число): "))
-  year = int(input("Введите год рождения (число): "))
+    def print_lines(lines):
+        for line in lines:
+            print(line)
 
-  day_of_week = get_day_of_week(day, month, year)
-  days = ["Суббота", "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница"]
-  leap_year = is_leap_year(year)
-  age = get_age(day, month, year)
+    day_lines = render_number(f"{day:02}")
+    month_lines = render_number(f"{month:02}")
+    year_lines = render_number(f"{year}")
 
-  print(f"Ваша дата рождения: {day:02} {month:02} {year}")
-  print(f"Это был {days[day_of_week]}.")
-  if leap_year:
-      print("Год был високосным.")
-  else:
-      print("Год не был високосным.")
-  print(f"Вам сейчас {age} лет.")
-  print("Ваша дата рождения в стилизованном формате:")
-  print_styled_date(day, month, year)
+    combined_lines = [
+        ''.join(parts) for parts in zip(
+            *day_lines, ["   "] * 5, *month_lines, ["   "] * 5, *year_lines
+        )
+    ]
+
+    print_lines(combined_lines)
 
 if __name__ == "__main__":
-  main()
+    day, month, year = get_user_birthday()
+
+    week_day = day_of_week(day, month, year)
+    leap = is_leap_year(year)
+    age = calculate_age(day, month, year)
+
+    print(f"Это была {week_day}.")
+    print(f"{year} год был {'високосным' if leap else 'не високосным'}.")
+    print(f"Сейчас вам {age} лет.")
+
+    print("Ваш день рождения в цифровом формате:")
+    print_digital_date(day, month, year)
