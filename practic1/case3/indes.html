@@ -1,24 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Slider</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Слайдер изображений</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="slider-container">
+        <button class="slider-button prev" onclick="moveSlide(-1)">←</button>
+        
         <div class="slider">
-            <img src="https://via.placeholder.com/800x400?text=Image+1" alt="Image 1" class="slide">
-            <img src="https://via.placeholder.com/800x400?text=Image+2" alt="Image 2" class="slide">
-            <img src="https://via.placeholder.com/800x400?text=Image+3" alt="Image 3" class="slide">
-            <img src="https://via.placeholder.com/800x400?text=Image+4" alt="Image 4" class="slide">
-            <img src="https://via.placeholder.com/800x400?text=Image+5" alt="Image 5" class="slide">
+            <div class="slider-slide">
+                <img src="https://xn----7sbqb2bhhfr1b9f.xn--p1ai/image/catalog/fiberboard/numbers/1.jpg" alt="Image 1" class="slider-image">
+            </div>
+            <div class="slider-slide">
+                <img src="https://almir.com/images/cms/thumbs/33062cf85a0bcea4707e9bc8c6c363a377a44e60/02_640_640_jpg_5_80.jpg" alt="Image 2" class="slider-image">
+            </div>
+            <div class="slider-slide">
+                <img src="https://tvoiraskraski.ru/wp-content/uploads/2022/06/raskraska_3_14.gif" alt="Image 3" class="slider-image">
+            </div>
+            <div class="slider-slide">
+                <img src="https://smilepeople.ru/wp-content/uploads/2017/11/shar-cifra-4-rozovyj-42-107-sm.jpg" alt="Image 4" class="slider-image">
+            </div>
+            <div class="slider-slide">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_bvPvCI4w_m27RuigGjTobCGDBfLrtJGb2A&s" alt="Image 5" class="slider-image">
+            </div>
         </div>
-        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-        <button class="next" onclick="changeSlide(1)">&#10095;</button>
-        <div class="counter">Изображение <span id="current">1</span> из <span id="total">5</span></div>
+
+        <button class="slider-button next" onclick="moveSlide(1)">→</button>
+        
+        <div class="slider-info">
+            <span id="current-slide">1</span> / <span id="total-slides">5</span>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
